@@ -76,18 +76,20 @@ class _SecondScreenState extends State<SecondScreen> {
   AppBar _buildAppBar() {
     final double height = MediaQuery.of(context).size.height;
     return AppBar(
-      toolbarHeight: 50,
+      toolbarHeight: height * 0.05,
       title: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 40, 20),
-        child: Text(
-          'BMI Calculator',
-          style: TextStyle(
-            fontFamily: 'Roboto',
-            fontSize: height * 0.04,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -0.2,
-            height: 1,
-            color: Color(0xFF78B060),
+        padding: const EdgeInsets.fromLTRB(0, 20, 40, 20),
+        child: Center(
+          child: Text(
+            'BMI Calculator',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: height * 0.04,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.2,
+              height: 1,
+              color: Color(0xFF78B060),
+            ),
           ),
         ),
       ),
@@ -117,14 +119,16 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget _buildWeightAndAgeInputs(double width, double height) {
     return Padding(
       padding:
-          EdgeInsets.fromLTRB(width * 0.03, height * 0.015, 0, height * 0.015),
+          EdgeInsets.fromLTRB(width * 0.01, height * 0.015, 0, height * 0.015),
       child: Row(
         children: [
           Expanded(
             child: _buildInputContainer(
               width: width,
+              height: height,
               label: 'Weight (kg)',
               value: _weight.toStringAsFixed(1),
+              fontSize: width * 0.12,
               onDecrement: () {
                 setState(() {
                   if (_weight > 0) _weight -= 0.1;
@@ -157,8 +161,10 @@ class _SecondScreenState extends State<SecondScreen> {
           Expanded(
             child: _buildInputContainer(
               width: width,
+              height: height,
               label: 'Age',
               value: _age.toString(),
+              fontSize: width * 0.12,
               onDecrement: () {
                 setState(() {
                   if (_age > 0) _age--;
@@ -193,6 +199,8 @@ class _SecondScreenState extends State<SecondScreen> {
   }
 
   Widget _buildHeightInput(double width) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -209,12 +217,12 @@ class _SecondScreenState extends State<SecondScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             'Height (cm)',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
-              fontSize: 16,
+              fontSize: height * 0.03,
               color: Color(0xFFACACAC),
             ),
           ),
@@ -239,6 +247,8 @@ class _SecondScreenState extends State<SecondScreen> {
   }
 
   Widget _buildHeightSlider(double width) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         setState(() {
@@ -311,7 +321,7 @@ class _SecondScreenState extends State<SecondScreen> {
             padding: EdgeInsets.all(height * 0.02),
             child: Center(
               child: Text(
-                'Continue',
+                'Calculate',
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w600,
@@ -332,6 +342,7 @@ class _SecondScreenState extends State<SecondScreen> {
 
   Widget _buildInputContainer({
     required double width,
+    required double height,
     required String label,
     required String value,
     required VoidCallback onDecrement,
@@ -341,6 +352,7 @@ class _SecondScreenState extends State<SecondScreen> {
     required VoidCallback onLongPressEnd,
     required String iconPathMinus,
     required String iconPathPlus,
+    required double fontSize,
   }) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: width * 0.05),
@@ -359,10 +371,10 @@ class _SecondScreenState extends State<SecondScreen> {
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
-              fontSize: 16,
+              fontSize: height * 0.025,
               color: Color(0xFFACACAC),
             ),
           ),
@@ -372,7 +384,7 @@ class _SecondScreenState extends State<SecondScreen> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
-              fontSize: width * 0.12,
+              fontSize: height * 0.06,
               color: const Color(0xFFCE922A),
             ),
           ),
@@ -428,9 +440,13 @@ class RulerPainter extends CustomPainter {
     double totalHeight = maxHeight - minHeight;
     double pixelsPerUnit = size.width / totalHeight;
 
+    // Adjust line lengths based on screen height
+    double largeMarkLength = size.height * 0.15; // 15% of the height
+    double smallMarkLength = size.height * 0.07; // 7% of the height
+
     for (double i = minHeight; i <= maxHeight; i++) {
       double x = (i - minHeight) * pixelsPerUnit;
-      double lineLength = (i % 10 == 0) ? 20 : 10;
+      double lineLength = (i % 10 == 0) ? largeMarkLength : smallMarkLength;
 
       canvas.drawLine(
         Offset(x, size.height / 2 - lineLength / 2),
@@ -439,11 +455,13 @@ class RulerPainter extends CustomPainter {
       );
     }
 
+    // Marker line
     paint.color = const Color(0xFFCE922A);
     double markerX = (currentHeight - minHeight) * pixelsPerUnit;
+    double markerLineLength = size.height * 0.2; // 20% of the height
     canvas.drawLine(
-      Offset(markerX, size.height / 2 - 30),
-      Offset(markerX, size.height / 2 + 30),
+      Offset(markerX, size.height / 2 - markerLineLength),
+      Offset(markerX, size.height / 2 + markerLineLength),
       paint,
     );
   }
@@ -467,16 +485,19 @@ class RulerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final safeAreaPadding = MediaQuery.of(context).padding;
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Adjust ruler height based on screen height, making it larger on tablets
+    double rulerHeight = screenHeight *
+        0.4; // 40% of the height for better visibility on larger screens
 
     return SafeArea(
       child: Container(
         width: screenWidth,
-        padding: EdgeInsets.symmetric(
-            horizontal: safeAreaPadding.left + safeAreaPadding.right),
+        height: rulerHeight,
         child: CustomPaint(
-          size: Size(screenWidth, 200),
+          size: Size(screenWidth, rulerHeight),
           painter: RulerPainter(
             minHeight: minHeight,
             maxHeight: maxHeight,
