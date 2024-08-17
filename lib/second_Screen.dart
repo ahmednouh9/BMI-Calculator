@@ -93,8 +93,9 @@ class _SecondScreenState extends State<SecondScreen> {
           ),
         ),
       ),
-      iconTheme: const IconThemeData(
+      iconTheme: IconThemeData(
         color: Color(0xFF78B060),
+        size: height * 0.04,
       ),
     );
   }
@@ -248,7 +249,7 @@ class _SecondScreenState extends State<SecondScreen> {
 
   Widget _buildHeightSlider(double width) {
     final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
+
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         setState(() {
