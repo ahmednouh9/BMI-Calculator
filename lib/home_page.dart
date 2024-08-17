@@ -9,7 +9,7 @@ class GenderSelection extends StatefulWidget {
 }
 
 class _GenderSelectionState extends State<GenderSelection> {
-  bool isMaleSelected = false;
+  bool? isMaleSelected;
 
   void _toggleGenderSelection(bool isMale) {
     setState(() {
@@ -66,8 +66,8 @@ class _GenderSelectionState extends State<GenderSelection> {
                     onTap: () => _toggleGenderSelection(true),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isMaleSelected
-                            ? const Color.fromARGB(255, 229, 253, 217)
+                        color: isMaleSelected == true
+                            ? Color.fromARGB(255, 222, 251, 207)
                                 .withOpacity(0.3)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(20),
@@ -106,8 +106,8 @@ class _GenderSelectionState extends State<GenderSelection> {
                     onTap: () => _toggleGenderSelection(false),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: !isMaleSelected
-                            ? const Color.fromARGB(255, 255, 235, 200)
+                        color: isMaleSelected == false
+                            ? Color.fromARGB(255, 253, 231, 191)
                                 .withOpacity(0.3)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(20),
