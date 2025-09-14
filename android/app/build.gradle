@@ -47,15 +47,16 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 34
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 2
+        versionName "1.1"
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.debug
+
         }
     }
 }
@@ -67,5 +68,6 @@ flutter {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     
-    implementation files('android/app/libs/appstore-sdk-3.0.5.jar')
+    implementation files('libs/appstore-sdk-3.0.5.jar')
 }
+

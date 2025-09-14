@@ -1,6 +1,5 @@
 import 'package:bmi_1_app/rusalt_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SecondScreen extends StatefulWidget {
   const SecondScreen({super.key});
@@ -52,15 +51,15 @@ class _SecondScreenState extends State<SecondScreen> {
     final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: _buildAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(width * 0.04),
           child: Column(
             children: [
-              SizedBox(height: height * 0.02),
               _buildTitle(),
-              SizedBox(height: height * 0.02),
+              SizedBox(height: height * 0.01),
               _buildWeightAndAgeInputs(width, height),
               SizedBox(height: height * 0.03),
               _buildHeightInput(width),
@@ -76,6 +75,7 @@ class _SecondScreenState extends State<SecondScreen> {
   AppBar _buildAppBar() {
     final double height = MediaQuery.of(context).size.height;
     return AppBar(
+      backgroundColor: Colors.white,
       toolbarHeight: height * 0.05,
       title: Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 40, 20),
@@ -154,8 +154,8 @@ class _SecondScreenState extends State<SecondScreen> {
                 _stopIncrementing();
                 _stopDecrementing();
               },
-              iconPathMinus: 'assets/vectors/211863_minus_round_icon.svg',
-              iconPathPlus: 'assets/vectors/211877_plus_round_icon.svg',
+              iconPathMinus: 'assets/211863_minus_round_icon.png',
+              iconPathPlus: 'assets/211877_plus_round_icon.png',
             ),
           ),
           SizedBox(width: width * 0.04),
@@ -190,8 +190,8 @@ class _SecondScreenState extends State<SecondScreen> {
                 _stopIncrementing();
                 _stopDecrementing();
               },
-              iconPathMinus: 'assets/vectors/211863_minus_round_icon.svg',
-              iconPathPlus: 'assets/vectors/211877_plus_round_icon.svg',
+              iconPathMinus: 'assets/211863_minus_round_icon.png',
+              iconPathPlus: 'assets/211877_plus_round_icon.png',
             ),
           ),
         ],
@@ -237,10 +237,14 @@ class _SecondScreenState extends State<SecondScreen> {
               color: const Color(0xFFCE922A),
             ),
           ),
-          SizedBox(height: width * 0.04),
+          SizedBox(height: width * 0.02),
           _buildHeightSlider(width),
           Center(
-            child: SvgPicture.asset('assets/vectors/polygon_1_x2.svg'),
+            child: Image.asset(
+              'assets/polygon_1_x2.png',
+              width: width * 0.03,
+              height: height * 0.03,
+            ),
           ),
         ],
       ),
@@ -305,16 +309,16 @@ class _SecondScreenState extends State<SecondScreen> {
             );
           },
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
+            backgroundColor: WidgetStateProperty.all(
               const Color(0xFF78B060),
             ),
-            shape: MaterialStateProperty.all(
+            shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
               ),
             ),
-            elevation: MaterialStateProperty.all(3),
-            shadowColor: MaterialStateProperty.all(
+            elevation: WidgetStateProperty.all(3),
+            shadowColor: WidgetStateProperty.all(
               const Color(0x1F000000),
             ),
           ),
@@ -397,7 +401,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 onTap: onDecrement,
                 onLongPress: onLongPressDecrement,
                 onLongPressEnd: (_) => onLongPressEnd(),
-                child: SvgPicture.asset(
+                child: Image.asset(
                   iconPathMinus,
                   height: width * 0.08,
                   width: width * 0.08,
@@ -407,7 +411,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 onTap: onIncrement,
                 onLongPress: onLongPressIncrement,
                 onLongPressEnd: (_) => onLongPressEnd(),
-                child: SvgPicture.asset(
+                child: Image.asset(
                   iconPathPlus,
                   height: width * 0.08,
                   width: width * 0.08,

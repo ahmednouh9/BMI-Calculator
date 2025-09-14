@@ -23,6 +23,7 @@ class _GenderSelectionState extends State<GenderSelection> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(
@@ -92,7 +93,7 @@ class _GenderSelectionState extends State<GenderSelection> {
                           Padding(
                             padding: EdgeInsets.only(right: screenWidth * 0.05),
                             child: Image.asset(
-                              'assets/vectors/avatar_boy_male_man_people_icon.png',
+                              'assets/avatar_boy_male_man_people_icon.png',
                               width: screenWidth * 0.35,
                               height: screenHeight * 0.18,
                             ),
@@ -132,7 +133,7 @@ class _GenderSelectionState extends State<GenderSelection> {
                           Padding(
                             padding: EdgeInsets.only(right: screenWidth * 0.05),
                             child: Image.asset(
-                              'assets/vectors/avatar_female_girl_people_profile_icon.png',
+                              'assets/avatar_female_girl_people_profile_icon.png',
                               width: screenWidth * 0.35,
                               height: screenHeight * 0.18,
                             ),
@@ -156,16 +157,16 @@ class _GenderSelectionState extends State<GenderSelection> {
                       ));
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                     const Color(0xFF78B060),
                   ),
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  elevation: MaterialStateProperty.all(3),
-                  shadowColor: MaterialStateProperty.all(
+                  elevation: WidgetStateProperty.all(3),
+                  shadowColor: WidgetStateProperty.all(
                     const Color(0x1F000000),
                   ),
                 ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ResultPage extends StatelessWidget {
   final double bmi;
@@ -55,7 +54,7 @@ class ResultPage extends StatelessWidget {
     double maxHealthyWeight = getMaxHealthyWeight(height);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -111,8 +110,8 @@ class ResultPage extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.fromLTRB(0, 0,
                               MediaQuery.of(context).size.width * 0.25, 2),
-                          child: SvgPicture.asset(
-                            'assets/vectors/polygon_11_x2.svg',
+                          child: Image.asset(
+                            'assets/polygon_11_x2.png',
                             width: MediaQuery.of(context).size.width * 0.015,
                             height: MediaQuery.of(context).size.height * 0.005,
                           ),
@@ -208,10 +207,10 @@ class ResultPage extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
+                      backgroundColor: WidgetStateProperty.all(
                         const Color(0xFF78B060),
                       ),
-                      shape: MaterialStateProperty.all(
+                      shape: WidgetStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
